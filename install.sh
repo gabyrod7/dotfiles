@@ -8,6 +8,15 @@ CONFIG_PROGRAMS=(
     "nvim"
 )
 
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+RED='\033[0;31m'
+RESET='\033[0m'
+
+OK="${GREEN}[OK]${RESET}"
+NOTE="${YELLOW}[Note]${RESET}"
+WARN="${RED}[Warning]${RESET}"
+
 softlink_config_files() {
     echo "Linking configs."
 
@@ -17,14 +26,14 @@ softlink_config_files() {
     	program_config_directory="${SCRIPT_DIR}/config"
 
         if [ ! -d "$base_path" ]; then
-            echo "[Note] Config directory ${base_path} does not exist. Skipping..."
+            printf "${NOTE} Config directory ${base_path} does not exist. Skipping...\n"
         elif [ -L "$target_path" ]; then
-            echo "[Note] Symlink ${target_path} already exists. Moving on..."
+            printf "${NOTE} Symlink ${target_path} already exists. Moving on...\n"
         elif [ -e "$target_path" ]; then
-            echo "[Warning] ${target_path} already exists but is not a symlink. Skipping..."
+            printf "${WARV} ${target_path} already exists but is not a symlink. Skipping...\n"
         else
             ln -s "$base_path" "$target_path"
-            echo "[OK] Link for ${config} established."
+            printf "[OK] Link for ${config} established.\n"
         fi
     done
     
