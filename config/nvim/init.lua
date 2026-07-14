@@ -39,6 +39,35 @@ require("lazy").setup({
   spec = {
     -- add your plugins here
     "neovim/nvim-lspconfig",
+    {
+      "hrsh7th/nvim-cmp",
+      dependencies = {
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
+      },
+      config = function()
+        local cmp = require("cmp")
+
+        cmp.setup({
+          window = {
+            completion = {
+              max_height = 5,
+            },
+          },
+          mapping = cmp.mapping.preset.insert({
+            ["<Tab>"] = cmp.mapping.select_next_item(),
+            ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+            ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          }),
+          sources = {
+            { name = "nvim_lsp" },
+            { name = "buffer" },
+            { name = "path" },
+          },
+        })
+      end,
+    },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
@@ -47,6 +76,10 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+vim.lsp.config("gopls", {
+  capabilities = capabilities,
+})
 vim.lsp.enable("gopls")
 
 vim.api.nvim_create_autocmd("BufReadPost", {
