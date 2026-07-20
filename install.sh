@@ -30,7 +30,7 @@ softlink_config_files() {
         elif [ -L "$target_path" ]; then
             printf "${NOTE} Symlink ${target_path} already exists. Moving on...\n"
         elif [ -e "$target_path" ]; then
-            printf "${WARV} ${target_path} already exists but is not a symlink. Skipping...\n"
+            printf "${WARN} ${target_path} already exists but is not a symlink. Skipping...\n"
         else
             ln -s "$base_path" "$target_path"
             printf "[OK] Link for ${config} established.\n"
