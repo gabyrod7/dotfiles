@@ -59,7 +59,7 @@ softlink_commands() {
     user_dotlocal_path="${HOME}/.local"
     if ! [[ ":$PATH:" == *":${user_dotlocal_path}:"* ]]; then
         export PATH=$PATH:$user_dotlocal_path
-    	printf "${NOTE} ${user_dotlocal_path} is not in your PATH, Consider adding it permanently to your shell configuration (e.g. ~/.bashrc)."
+    	printf "${NOTE} ${user_dotlocal_path} is not in your PATH, Consider adding it permanently to your shell configuration (e.g. ~/.bashrc).\n"
     fi
 
     mkdir -p "$USER_BIN_DIR"
